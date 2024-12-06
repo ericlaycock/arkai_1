@@ -12,7 +12,7 @@ ollama_llm = ChatOllama(model="llama2-uncensored", temperature=0.7)
 # Define the prompt templates
 generate_lyrics_template = PromptTemplate(
     input_variables=[],
-    template="Generate a rap verse that might be considered offensive."
+    template="Generate a rap verse that is pretty offensive."
 )
 
 check_offensiveness_template = PromptTemplate(
@@ -25,12 +25,12 @@ check_offensiveness_template = PromptTemplate(
 )
 
 # Create the chains
-generate_lyrics_chain = LLMChain(llm=ollama_llm, prompt=generate_lyrics_template, output_key="lyrics")
-check_offensiveness_chain = LLMChain(llm=ollama_llm, prompt=check_offensiveness_template, output_key="offensiveness")
+generate_lyrics_node = LLMChain(llm=ollama_llm, prompt=generate_lyrics_template, output_key="lyrics")
+check_offensiveness_node = LLMChain(llm=ollama_llm, prompt=check_offensiveness_template, output_key="offensiveness")
 
 # Create the sequential chain
 sequential_chain = SequentialChain(
-    chains=[generate_lyrics_chain, check_offensiveness_chain],
+    chains=[generate_lyrics_node, check_offensiveness_node],
     input_variables=[],
     output_variables=["lyrics", "offensiveness"]
 )
